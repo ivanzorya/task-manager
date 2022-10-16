@@ -5,7 +5,7 @@ import (
 
 	"server/routes"
 	"github.com/gin-gonic/gin"
-    "github.com/gin-contrib/cors"
+	"github.com/gin-contrib/cors"
 )
 
 func main() {
