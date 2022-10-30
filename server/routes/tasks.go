@@ -27,6 +27,9 @@ func AddTask(c *gin.Context) {
 	if err := c.BindJSON(&task); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		fmt.Println(err)
+
+		defer cancel()
+		
 		return
 	}
 
@@ -34,6 +37,9 @@ func AddTask(c *gin.Context) {
 	if validationErr != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
 		fmt.Println(validationErr)
+
+		defer cancel()
+		
 		return
 	}
 	task.ID = primitive.NewObjectID()
@@ -43,6 +49,9 @@ func AddTask(c *gin.Context) {
 		msg := fmt.Sprintf("task item was not created")
 		c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
 		fmt.Println(insertErr)
+
+		defer cancel()
+		
 		return
 	}
 	defer cancel()
@@ -61,12 +70,18 @@ func GetTasks(c *gin.Context){
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		fmt.Println(err)
+
+		defer cancel()
+
 		return
 	}
 	
 	if err = cursor.All(ctx, &tasks); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		fmt.Println(err)
+
+		defer cancel()
+		
 		return
 	}
 
@@ -89,6 +104,9 @@ func GetTaskById(c *gin.Context){
 	if err := taskCollection.FindOne(ctx, bson.M{"_id": docID}).Decode(&task); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		fmt.Println(err)
+
+		defer cancel()
+		
 		return
 	}
 
@@ -111,6 +129,9 @@ func UpdateTask(c *gin.Context){
 	if err := c.BindJSON(&task); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		fmt.Println(err)
+
+		defer cancel()
+		
 		return
 	}
 
@@ -118,6 +139,9 @@ func UpdateTask(c *gin.Context){
 	if validationErr != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
 		fmt.Println(validationErr)
+
+		defer cancel()
+		
 		return
 	}
 
@@ -133,6 +157,9 @@ func UpdateTask(c *gin.Context){
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		fmt.Println(err)
+
+		defer cancel()
+		
 		return
 	}
 
@@ -153,6 +180,9 @@ func DeleteTask(c * gin.Context){
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		fmt.Println(err)
+
+		defer cancel()
+		
 		return
 	}
 
