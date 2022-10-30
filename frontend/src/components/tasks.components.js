@@ -62,7 +62,7 @@ const Tasks = () => {
         <div>
             
             <Container>
-                <Button onClick={() => setAddNewTask(true)}>Add new task</Button>
+                <Button className="stndrt-class" onClick={() => setAddNewTask(true)}>Add new task</Button>
             </Container>
 
             <Container>
@@ -73,16 +73,20 @@ const Tasks = () => {
             
             <Modal show={addNewTask} onHide={() => setAddNewTask(false)} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add Task</Modal.Title>
+                    <Modal.Title className="stndrt-class">Add Task</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
                     <Form.Group>
-                        <Form.Control onChange={(event) => {newTask.subject = event.target.value}}/>
-                        <InputGroup.Checkbox type="checkbox" onChange={(event) => {newTask.done = event.target.checked}}/>
+                        <Form.Control className="stndrt-class" onChange={(event) => {
+                            setNewTask({...newTask , subject: event.target.value});
+                            }}/>
+                        <InputGroup.Checkbox type="checkbox" onChange={(event) => {
+                            setNewTask({...newTask , done: event.target.checked});
+                            }}/>
                     </Form.Group>
-                    <Button onClick={() => addSingleTask()}>Add</Button>
-                    <Button onClick={() => setAddNewTask(false)}>Cancel</Button>
+                    <Button className="stndrt-class" onClick={() => addSingleTask()}>Add</Button>
+                    <Button className="stndrt-class" onClick={() => setAddNewTask(false)}>Cancel</Button>
                 </Modal.Body>
             </Modal>
         </div>
